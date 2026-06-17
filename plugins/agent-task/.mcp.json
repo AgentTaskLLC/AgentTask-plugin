@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "agent-task": {
+      "type": "http",
+      "url": "https://app.dev.agent-task.com/v1/public/mcp",
+      "headers": {
+        "Authorization": "Bearer ${AGENT_TASK_API_KEY}"
+      }
+    }
+  }
+}

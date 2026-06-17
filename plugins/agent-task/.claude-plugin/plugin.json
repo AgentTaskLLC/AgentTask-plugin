@@ -1,0 +1,8 @@
+{
+  "name": "agent-task",
+  "version": "0.1.0",
+  "description": "Drive Agent Task from your agent: one install wires up the MCP connection and adds intent-level slash commands (/start, /update, /report, /organize, /init, /finish).",
+  "author": { "name": "Agent Task" },
+  "homepage": "https://app.dev.agent-task.com",
+  "keywords": ["agent-task", "tasks", "project-management", "mcp"]
+}

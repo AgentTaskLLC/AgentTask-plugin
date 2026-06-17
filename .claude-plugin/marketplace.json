@@ -1,0 +1,12 @@
+{
+  "name": "agent-task",
+  "owner": { "name": "Agent Task" },
+  "plugins": [
+    {
+      "name": "agent-task",
+      "source": "./plugins/agent-task",
+      "version": "0.1.0",
+      "description": "Drive Agent Task from your agent: one install wires up the MCP connection and adds intent-level slash commands (/start, /update, /report, /organize, /init, /finish)."
+    }
+  ]
+}
