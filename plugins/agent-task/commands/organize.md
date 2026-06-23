@@ -22,7 +22,8 @@ Hint from the user: **$ARGUMENTS**
 
 ## Plan
 
-- Read all tasks in scope (`list_tasks`, plus `list_task_groups`, `list_projects`, `list_labels`).
+- Read all tasks in scope (`list_tasks_and_subtasks`, plus `list_task_groups`, `list_projects`,
+  `list_labels`).
 - Propose a target structure: which groups/projects should exist (existing + any new ones), a tight
   label taxonomy, and how tasks map onto them. Present it as a clear before → after.
 - Wait for confirmation. Let the user amend the plan.

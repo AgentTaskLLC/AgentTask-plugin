@@ -21,9 +21,11 @@ Ask only what isn't already implied by `$ARGUMENTS`; offer sensible defaults:
 
 ## Gather
 
-- `list_tasks` for the scope (filter by project/group as chosen). Pull `list_subtasks` and
-  `list_comments` where useful for detail. Use `fetch` for any item you need the full body of.
-- Filter to the chosen date range (created/updated/completed within it).
+- `list_tasks_and_subtasks` for the scope (filter by `projectUuid` / `groupUuid` / `status` as
+  chosen; omit `spaceUuid` to span every space). Page through `nextCursor` so the report isn't
+  truncated. Pull `list_comments` (latest status notes) and `fetch` for any item you need in full.
+- Filter to the chosen date range **client-side** on the returned items (created/updated/completed
+  within it) — there's no server-side date filter.
 
 ## Compose
 

@@ -20,6 +20,10 @@ Each comment (`add_comment` on the task) should be 1–3 lines: what changed, wh
 blocker. Don't repeat unchanged status. If running under `/loop` or a similar timer, gate the
 comment on "did something material change since the last one?" — skip the tick if not.
 
+`add_comment` takes the **space's** `spaceUuid` plus `targetId` (the task/subtask UUID) and
+`targetType` — passing the task UUID as `spaceUuid` fails with `space_not_found` (see
+`agent-task-workflow`).
+
 ## Recording a PR
 
 When a coding task produces a pull request:

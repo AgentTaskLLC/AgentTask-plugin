@@ -15,8 +15,8 @@ Scope hint from the user: **$ARGUMENTS**
 
 1. **Confirm scope.** Decide whether to sync just *this session's work* or a whole project/space.
    If `$ARGUMENTS` makes it clear, proceed; otherwise ask once (default: this session's work).
-2. **Inventory current state.** For the scope, `list_tasks` (and `list_subtasks` for active tasks)
-   to see what already exists.
+2. **Inventory current state.** For the scope, `list_tasks_and_subtasks` (filter by space / project
+   / group; it includes subtasks) to see what already exists.
 3. **Capture untracked work.** For meaningful work happening that isn't tracked, create it:
    `create_task` for new top-level items, `create_subtask` for pieces of an existing task. Batch
    creates with `items[]` where possible.
@@ -24,8 +24,8 @@ Scope hint from the user: **$ARGUMENTS**
    - **Description** — write a real one where it's missing or stale.
    - **Labels** — `list_labels`, apply fitting labels; `create_label` for clearly-useful missing
      ones. Apply labels to **subtasks** too (`update_subtask({ labels })`).
-   - **Group + project** — map each item via `update_task({ groupUuid, projectUuid })`, using group
-     `description`s as routing hints.
+   - **Group + project** — map each item via `update_task({ groupUuid, projectUuid })`; use
+     `suggest_group` (or group `description`s) as routing hints.
    - **Assignee on claim** — if you're actively doing it, `assignee: "me"`.
    - **Status** — advance obvious ones (e.g. clearly-started → `in_progress`). For anything
      non-trivial, **flag it** rather than silently flipping.

@@ -19,6 +19,7 @@ exception is the **assignee**, which is a numeric **user id** (or `"me"` / a use
 ```
 list_spaces                 → pick the space, keep its uuid (or slug)
 list_task_groups(space)     → pick the group               (only if you need a non-default group)
+suggest_group(space,title)  → let the board suggest a group (optional, read-only routing aid)
 list_projects(space)        → pick the project             (only if you map to a project)
 list_space_members(space)   → resolve an assignee → userId (only if you assign)
 list_labels(space)          → resolve / create labels      (only if you label)
@@ -29,23 +30,30 @@ Run the middle steps only when the action needs them.
 
 ## Resolving an `AI-XX` code
 
-`AI-45` is a display code, not an identifier you can pass. To act on it: `search({ query: "AI-45" })`
-(or `list_tasks({ spaceUuid })`), find the task whose `code` is `AI-45`, and use its **`uuid`**.
+`AI-45` is a display code, **not** an identifier you can pass — `fetch` and the space-scoped tools
+reject it (`invalid input syntax for type uuid`). To act on it: `search({ query: "AI-45" })` (or
+`list_tasks_and_subtasks({ spaceUuid })`), find the task whose `code` is `AI-45`, and use its
+**`uuid`**. (`fetch` *does* accept the task's app URL or UUID.)
 
-## The consolidated tool set (≈24 tools)
+## The consolidated tool set
 
 | Goal | Tool |
 |------|------|
 | Discover | `list_spaces`, `list_task_groups`, `list_projects`, `list_space_members`, `list_labels` |
-| Find | `search`, `list_tasks`, `list_subtasks`, `list_comments`, `fetch` (any entity by UUID/URL) |
-| Begin work | `start_work` (resumes the active ticket or creates one) |
+| Find | `search` (tasks/notes org-wide, projects need a space), `list_tasks_and_subtasks` (filter by space/status/assignee/project/group), `list_subtasks` (one task's children), `list_comments`, `fetch` (any entity by UUID/URL) |
+| Begin work | `start_work` (resumes/claims your ticket, else creates one) |
 | Create | `create_task` (batch via `items[]`), `create_subtask`, `create_project`, `create_task_group`, `create_label`, `create_note` |
-| Update | `update_task`, `update_subtask`, `update_project`, `update_task_group`, `update_note` — each takes **any subset** of fields in one call |
-| Comment | `add_comment`, `delete_comment` |
+| Update | `update_task`, `update_subtask`, `update_project`, `update_task_group`, `update_note`, `update_label` — each takes **any subset** of fields in one call |
+| Comment | `add_comment`, `update_comment`, `delete_comment` |
+| Attach | `list_attachments`, `download_attachments`, `prepare_attachment_upload` → `create_attachment_from_upload`, `delete_attachment` |
+| Route | `suggest_group` (ranked group suggestion + confidence, read-only) |
 
 `update_task` and `update_subtask` are polymorphic — pass only the fields you want to change
 (status, priority, title, description, assignee, **labels**, group, project, dueDate, **prUrl**,
 isBlocked). Labels are a **replace set**: `[]` clears them. Labels work on **subtasks** too.
+
+`start_work` returns `action`: `resumed` | `picked_up` | `created`. If it resumed or picked up a
+ticket, **continue that one — don't create a duplicate**. Pass `title` only to force a new ticket.
 
 ## Enum cheat-sheet
 
@@ -58,7 +66,14 @@ isBlocked). Labels are a **replace set**: `[]` clears them. Labels work on **sub
 
 ## Gotchas
 
+- **Comments & attachments need the *space's* `spaceUuid`** — plus the task/subtask `targetId`.
+  Passing the task's UUID as `spaceUuid` fails with `space_not_found`. Get the space UUID from
+  `list_spaces` (or infer it from the task), then pass `targetId` = the task/subtask UUID.
 - A space-scoped tool returns `not_found` if the UUID belongs to another org/space — that's tenant
   isolation, not a bug. Re-resolve from `list_spaces`.
 - `create_task` doesn't set a project; create, then `update_task({ projectUuid })`.
 - Prefer one batched `update_task({ items: [...] })` over many single calls when touching many tasks.
+- `search` and `list_tasks_and_subtasks` are **cursor-paginated** (`nextCursor` / `cursor`); page
+  through when you need the full set. Omitting `spaceUuid` searches across all your authorized spaces.
+- `spaceUuid` accepts a **slug** as well as a UUID. Most space-scoped read tools (`list_subtasks`,
+  `list_comments`, `fetch`) can **infer** the space from the entity, so `spaceUuid` is optional there.

@@ -19,10 +19,12 @@ Input from the user: **$ARGUMENTS** (may be an `AI-XX` code, a title, a rough de
    - If the input is an `AI-XX` code or matches an existing task (`search`), use that task.
    - Otherwise treat the input as new work and create it (next step). If the input is empty, fall
      back to `start_work` (it resumes the active ticket or picks up the oldest todo) and skip to 6.
-3. **Map to project + group.** Look at `list_projects` and `list_task_groups` (use each group's
-   `description` as a routing hint). Infer the best fit. **Only ask** when it's genuinely ambiguous
-   or nothing fits — and offer to create a new project/group if appropriate. The user may skip;
-   default to the space's default group and no project.
+3. **Map to project + group.** Call `suggest_group({ spaceUuid, title, description })` for a ranked
+   group suggestion — when its recommendation is `auto`, trust it; when `ask`, fall back to scanning
+   `list_task_groups` (use each group's `description` as a routing hint). Pick a project from
+   `list_projects`. **Only ask** when it's genuinely ambiguous or nothing fits — and offer to create
+   a new project/group if appropriate. The user may skip; default to the space's default group and no
+   project.
 4. **Write a description.** Draft a concise, useful task description (goal, acceptance, any context
    from the conversation). Don't leave it blank.
 5. **Apply labels.** `list_labels`; pick the fitting ones. Create missing labels (`create_label`)

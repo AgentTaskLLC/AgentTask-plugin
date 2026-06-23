@@ -13,7 +13,7 @@ Input from the user: **$ARGUMENTS** (an `AI-XX` code / title, or empty for the a
 ## Steps
 
 1. **Resolve the task.** From `$ARGUMENTS` (`search`), or if empty use the active in-progress task
-   (`start_work` resumes it / `list_tasks({ status: in_progress, assignee: "me" })`).
+   (`start_work` resumes it / `list_tasks_and_subtasks({ status: "in_progress", assignee: "me" })`).
 2. **Check subtasks.** `list_subtasks`. If any are unresolved, list them and ask whether to close
    them too (`update_subtask({ status: done })`) or leave them — don't silently close children.
 3. **Coding task?** If it has a PR (`prUrl`) or should have one:
