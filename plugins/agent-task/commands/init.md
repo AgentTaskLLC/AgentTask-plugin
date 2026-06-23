@@ -33,6 +33,29 @@ Ask these one at a time or as a short batch; accept "skip" for any:
 - If starter tasks were requested, `create_task` (batch via `items[]`) — each with a real
   description and fitting labels, mapped to the new project (`update_task({ projectUuid })`) and the
   right group.
+- **Scaffold agent guidance** — write a `CLAUDE.md` in the current working directory (the user's
+  project root) containing the *Keep tickets updated* block below, so any agent working in this repo
+  keeps its Agent Task ticket a live record. If `CLAUDE.md` already exists, **append** the block only
+  when that section isn't already present — never overwrite or duplicate existing content. Tell the
+  user the file was created/updated (skippable).
+
+## Keep-tickets-updated block to write
+
+When scaffolding, write exactly this section into the project's `CLAUDE.md`:
+
+```markdown
+## Agent Task — keep tickets updated
+
+When you work on an Agent Task ticket (e.g. an `AI-…` code) in this repo, keep the ticket a live
+record via the Agent Task MCP tools (`add_comment`, `update_task`):
+
+- As you make progress, post short `add_comment` updates at meaningful checkpoints (a sub-goal done,
+  a blocker hit/cleared, a decision made) — 1–3 lines: what changed, what's next.
+- When you open a PR for the ticket, record it immediately: `update_task({ taskId, prUrl })`, and
+  mention it in a comment. Keep `prUrl` current if the PR is replaced.
+- When the work is done, leave a final comment summarizing the latest changes and link the merged
+  PR. Don't set `status: done` silently — confirm with the user (and that the PR is merged) first.
+```
 
 ## Report
 
