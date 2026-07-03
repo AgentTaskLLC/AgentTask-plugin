@@ -2,7 +2,9 @@
 
 A standalone, self-contained Claude Code plugin for **Agent Task**. Installing it wires up the
 Agent Task MCP connection and adds intent-level slash commands (`/start`, `/update`, `/report`,
-`/organize`, `/init`, `/finish`) plus the shared workflow skills.
+`/organize`, `/init`, `/finish`, `/crews`) plus the shared workflow skills — including **crew
+personas** (assignable AI teammates) that `/crews sync` materializes as real Claude Code subagents
+with enforced advise-mode tool restrictions.
 
 This bundle is fully independent of the Agent Task product source — it only talks to the hosted
 MCP server. You never need the product repo to use it.
