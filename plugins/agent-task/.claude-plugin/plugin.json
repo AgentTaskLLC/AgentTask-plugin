@@ -1,8 +1,17 @@
 {
   "name": "agent-task",
-  "version": "0.1.0",
-  "description": "Drive Agent Task from your agent: one install wires up the MCP connection and adds intent-level slash commands (/start, /plan, /update, /triage, /standup, /report, /organize, /note, /init, /finish) plus workflow skills.",
-  "author": { "name": "Agent Task" },
+  "version": "0.2.0",
+  "description": "Drive Agent Task from your agent: one install wires up the MCP connection and adds intent-level slash commands (/start, /plan, /update, /triage, /standup, /report, /organize, /note, /init, /finish, /crews) plus workflow skills — including crew personas that sync into real Claude Code subagents.",
+  "author": {
+    "name": "Agent Task"
+  },
   "homepage": "https://app.dev.agent-task.com",
-  "keywords": ["agent-task", "tasks", "project-management", "mcp"]
+  "keywords": [
+    "agent-task",
+    "tasks",
+    "project-management",
+    "mcp",
+    "crews",
+    "subagents"
+  ]
 }
