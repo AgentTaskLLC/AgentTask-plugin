@@ -66,6 +66,24 @@ result carries it:
 - Re-running on your *own* claim just refreshes it (idempotent); `claim` is `null` when no claim
   could be taken (e.g. an org key with no associated user).
 
+### Stamp where the work is happening (claim provenance)
+
+The claim is what the ticket shows for **who + where** is executing it. A claim is recorded not just
+by `start_work` but implicitly on any work signal — moving a task to `in_progress`/`done`, adding a
+comment, changing a subtask's status, or **creating a subtask** (planning/decomposition). To make
+the ticket show *where* (not just who + when), **stamp the execution-context fields** whenever you
+begin or advance work. They're accepted by `start_work`, `update_task`, `update_subtask`,
+`create_subtask`, and `add_comment`:
+
+- `branch` — `git branch --show-current`
+- `worktreePath` — the repo cwd (`git rev-parse --show-toplevel`, else `pwd`)
+- `hostname` — `hostname`
+- `os` — the platform (`darwin`, `linux`, …)
+- `sessionId` / `sessionName` — an id/label for this working session (optional)
+
+Gather them once when you pick up a ticket and reuse them across that ticket's writes. All are
+advisory and record-only — omit any you can't determine; the claim still records who + when.
+
 ## Idempotent writes (safe retries)
 
 `add_comment`, `create_task`, and `create_subtask` accept an optional **`idempotencyKey`**. Pass a

@@ -7,7 +7,7 @@
     {
       "name": "agent-task",
       "source": "./plugins/agent-task",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "description": "Drive Agent Task from your agent: one install wires up the MCP connection and adds intent-level slash commands (/start, /plan, /update, /triage, /standup, /report, /organize, /note, /init, /finish, /crews) plus workflow skills — including crew personas that sync into real Claude Code subagents."
     }
   ]

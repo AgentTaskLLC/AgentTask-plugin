@@ -36,7 +36,20 @@ Input from the user: **$ARGUMENTS** (may be an `AI-XX` code, a title, a rough de
    if it returns `already_claimed`, another agent holds it: surface that and pick a different ticket
    rather than working it in parallel (see the **Claiming & contention** section of
    `agent-task-workflow`).
-7. **Coding work?** If this task involves code, note that the PR URL should be recorded on the task
+7. **Record this session's context on the claim (AI-898).** So the ticket shows *which live session,
+   on which machine, in which repo/branch* is working it, take the claim via `start_work` and pass
+   your execution context. Gather it once with a single shell call —
+   `pwd; git branch --show-current 2>/dev/null; hostname; uname -sr` — and use your own session id.
+   Then call `start_work` (no `title`) with `{ spaceUuid, sessionId, sessionName, worktreePath,
+   branch, hostname, os }` — `sessionName` is a short human label for this session (e.g. the ticket
+   code + a few words of what you're doing, like "AI-898 claim context"); the id stays the key. It
+   resumes the ticket you just set in_progress and stamps the context onto its claim (this
+   is the same call that already handles the empty-input / pick-up path). Records only — it never
+   changes claim state. Later, when a PR opens, refresh it with
+   `update_task_claim({ taskUuid, prUrl })`. Pass only the fields you actually have; omit any you
+   can't determine (e.g. `branch` outside a git repo). If `start_work` returns `already_claimed`,
+   surface the contention instead of overwriting.
+8. **Coding work?** If this task involves code, note that the PR URL should be recorded on the task
    later via `update_task({ prUrl })` (see `/finish` and the periodic update behavior).
 
 ## Report
