@@ -7,7 +7,7 @@
   },
   "homepage": "https://app.dev.agent-task.com",
   "license": "proprietary",
-  "logoUrl": "https://agent-task.com/logo.svg",
+  "logoUrl": "https://raw.githubusercontent.com/AgentTaskLLC/AgentTask-plugin/main/logo.svg",
   "keywords": [
     "agent-task",
     "tasks",
