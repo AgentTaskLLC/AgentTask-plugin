@@ -6,6 +6,7 @@
     "name": "Agent Task"
   },
   "homepage": "https://app.dev.agent-task.com",
+  "license": "proprietary",
   "keywords": [
     "agent-task",
     "tasks",
