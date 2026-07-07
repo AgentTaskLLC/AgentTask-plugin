@@ -7,6 +7,7 @@
   },
   "homepage": "https://app.dev.agent-task.com",
   "license": "proprietary",
+  "logoUrl": "https://example.com/logo.svg",
   "keywords": [
     "agent-task",
     "tasks",
