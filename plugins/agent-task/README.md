@@ -127,6 +127,37 @@ slash commands/skills, which are part of this Claude Code plugin.)
 OAuth requires `MCP_SERVER_ENABLED` + `MCP_OAUTH_ENABLED` on the target deployment (set on dev;
 verify before pointing at a prod host). Full walkthrough: `docs/CONNECT_CLAUDE.md`.
 
+### Option C — Cursor IDE OAuth (Cursor Desktop + Cloud Agents)
+
+Cursor supports MCP servers via OAuth with specific redirect URIs. Agent Task now supports both:
+
+| Cursor Surface | Redirect URI | Status |
+|---------------|--------------|--------|
+| **Cursor Desktop** | `cursor://anysphere.cursor-mcp/oauth/callback` | ✅ Supported |
+| **Cursor Cloud Agents** | `https://www.cursor.com/agents/mcp/oauth/callback` | ✅ Supported |
+
+**Setup:**
+
+1. Add the MCP server to your Cursor settings (`~/.cursor/mcp.json`):
+
+```json
+{
+  "mcpServers": {
+    "agent-task": {
+      "type": "http",
+      "url": "https://app.dev.agent-task.com/v1/public/mcp"
+    }
+  }
+}
+```
+
+2. Cursor will initiate OAuth on first connection. A browser window opens for Agent Task login.
+3. Select the spaces you want to connect, then consent.
+4. Cursor Desktop uses the native `cursor://` protocol; Cloud Agents use the HTTPS callback.
+
+**Note:** Cursor routes (slash commands/skills) are **not** supported — only MCP tools. For the full
+Agent Task experience with commands, use Claude Code with this plugin.
+
 ### Pointing at another environment
 
 To point at a different host, edit the `url` in `.mcp.json` (defaults to the dev host
