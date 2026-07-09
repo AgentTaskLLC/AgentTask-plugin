@@ -37,11 +37,35 @@ crew's ack/result first — its comments are attributed to the crew, or carry it
    Respect `runtimeConfig`: pass `model`/`effort` to the Agent tool when set. **Advise mode**: tell
    the sub-agent it must not modify files, and do not grant it write tools if you can choose the
    agent type (a synced `.claude/agents/<crew>.md` enforces this structurally — prefer it when it
-   exists).
+   exists). When the crew has tool grants (see below), the synced subagent's `tools:` frontmatter
+   is the authority — cast THAT subagent rather than improvising a prompt-only persona.
 3. **Deliver the checklist**: post the result as ONE comment attributed to the crew — a ✅/❌ line
    per deliverable item, then the findings. Use `add_comment({ ..., crewUuid })`.
 4. **Never flip the ticket yourself** on the crew's behalf — the human assignee stays responsible.
    Advise-mode findings are input to the human, not gates you enforce.
+
+## Tool grants (AI-P24)
+
+A crew's capability is data on the crew record, not vibes in its prompt:
+
+- **Mode sets the FILE floor.** Advise = read-only files (`Read, Grep, Glob`), always. Execute
+  may write files. This never changes with grants.
+- **`runtimeConfig.extraTools` adds product tools deliberately** — e.g. `update_task` (move the
+  board), `notify` (ping humans). An advise crew with `extraTools: [update_task]` may change
+  TASKS while still unable to touch FILES; that is intended, not a bug.
+- **`blockedTools` always wins** — over extras and over the floor.
+- `/crews sync` compiles the effective list into the subagent's `tools:` frontmatter; the
+  Claude Code harness enforces it mechanically. Grants are additive-only via frontmatter — a
+  prompt can never widen them.
+
+**When a needed tool is not granted: STOP.** Report the missing grant in the crew's deliverable
+output ("❌ could not update the task — this crew has no `update_task` grant; add it in the crew's
+Tools settings") and let the human decide. Never impersonate the crew with your own broader
+session, shell around the block, or quietly do it un-attributed. A grant error is the feature
+working.
+
+`notify` etiquette: crews send notifications for moments a human must see NOW (blocker, verdict,
+handback). Routine progress belongs in `add_comment` — the inbox is not a log file.
 
 ## Attribution
 

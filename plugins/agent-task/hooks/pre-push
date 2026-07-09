@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Agent Task crew pre-push hook (AI-1207) — managed by /crews hook.
+# MARKER: agent-task-crew-hook  (do not remove; /crews hook uninstall keys off it)
+#
+# Purpose: before code is pushed upstream, remind the developer to engage any crews
+# configured with the `before_upstream_push` involvement trigger (e.g. a reviewer crew).
+# A git hook runs in a plain shell and cannot drive an interactive Claude Code session,
+# so it GATES/REMINDS rather than auto-running crews:
+#
+#   - non-blocking (default): prints a reminder and always allows the push.
+#   - blocking (AGENT_TASK_HOOK_BLOCKING=true or installed with --blocking): aborts the
+#     push unless you acknowledge with AGENT_TASK_HOOK_ACK=1 (run `/crews check` first),
+#     or bypass entirely with `git push --no-verify`.
+#
+# Env:
+#   AGENT_TASK_HOOK_BLOCKING=true   force blocking for a single push
+#   AGENT_TASK_HOOK_ACK=1           acknowledge crews are handled (allows a blocking push)
+#   AGENT_TASK_HOOK_SILENT=true     suppress output
+set -euo pipefail
+
+BLOCKING="${AGENT_TASK_HOOK_BLOCKING:-__DEFAULT_BLOCKING__}"
+SILENT="${AGENT_TASK_HOOK_SILENT:-false}"
+
+log() { [ "$SILENT" = "true" ] || printf '%s\n' "$*" >&2; }
+
+log "── Agent Task ── crews with a 'before_upstream_push' trigger want a look before you push."
+log "   Engage them in Claude Code:  /crews check   (or /crews sync-execute <project>)"
+
+if [ "$BLOCKING" = "true" ] && [ "${AGENT_TASK_HOOK_ACK:-}" != "1" ]; then
+  log ""
+  log "   Push BLOCKED (blocking mode). After running the crews, retry with:"
+  log "     AGENT_TASK_HOOK_ACK=1 git push …"
+  log "   or bypass the hook entirely with:  git push --no-verify"
+  exit 1
+fi
+
+exit 0

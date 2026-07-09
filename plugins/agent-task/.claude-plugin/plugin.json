@@ -1,13 +1,11 @@
 {
   "name": "agent-task",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Drive Agent Task from your agent: one install wires up the MCP connection and adds intent-level slash commands (/start, /plan, /update, /triage, /standup, /report, /organize, /note, /init, /finish, /crews) plus workflow skills — including crew personas that sync into real Claude Code subagents.",
   "author": {
     "name": "Agent Task"
   },
   "homepage": "https://app.dev.agent-task.com",
-  "license": "proprietary",
-  "logoUrl": "https://raw.githubusercontent.com/AgentTaskLLC/AgentTask-plugin/main/logo.svg",
   "keywords": [
     "agent-task",
     "tasks",
@@ -15,5 +13,7 @@
     "mcp",
     "crews",
     "subagents"
-  ]
+  ],
+  "license": "proprietary",
+  "logoUrl": "https://raw.githubusercontent.com/AgentTaskLLC/AgentTask-plugin/main/logo.svg"
 }
