@@ -12,7 +12,7 @@ One install wires up the whole Agent Task experience in your agent:
   | `/start` | Start one task: map it to project + group, write a description, apply labels, claim it, set in-progress. |
   | `/plan` | Break a task into well-formed subtasks with descriptions, then claim the first piece. |
   | `/update` | Mid-session sync: capture untracked work, describe + label it (incl. subtasks), map to group/project, post status-update comments. |
-  | `/triage` | Process the Inbox / unsorted tasks: route each to a group + project, label, set priority, flag duplicates. |
+  | `/triage` | Process the default group / unsorted tasks: route each to a group + project, label, set priority, flag duplicates. |
   | `/standup` | Personal daily: what you moved, what's in progress, and your blockers (read-only). |
   | `/report` | Ask date range / space / project, then write a full progress report (read-only). |
   | `/organize` | Reorganize tasks in a chosen scope into a coherent structure (groups, projects, labels). |
@@ -75,44 +75,58 @@ Notes:
 
 ### Is it safe to make public?
 
-Yes. The plugin contains no API keys or secrets (`.mcp.json` uses the `${AGENT_TASK_API_KEY}`
-placeholder), no product source, and no internal infra references — only usage docs and a config
-pointing at the hosted MCP endpoint. Every tool stays gated behind auth on the server, so a public
-repo grants nobody access to data. Two things to weigh before publishing publicly:
+Yes. The plugin contains no API keys or secrets (`.mcp.json` holds only the hosted endpoint URL),
+no product source, and no internal infra references — only usage docs and a config pointing at the
+hosted MCP endpoint. Every tool stays gated behind auth on the server, so a public repo grants
+nobody access to data. Two things to know before publishing publicly:
 
-1. The default `url` advertises the **dev** host. For a public artifact, prefer pointing
-   `.mcp.json` (and the README URLs) at a **stable/prod** host instead.
+1. The default `url` points at the **production** host (`app.agent-task.com`) — safe to advertise.
+   Only repoint it (see "Pointing at another environment") for internal/dev use.
 2. Anyone can install it, but nobody can connect without an API key you issue or an OAuth login to
    your tenant — "public repo" ≠ "public access".
 
 ## Setup
 
-The MCP server supports **two auth modes** — pick one. The bundled `.mcp.json` ships with the
-API-key mode (Option A).
+The MCP server supports **two auth modes** — pick one. The bundled `.mcp.json` ships **header-free**,
+which means OAuth mode (Option B) works out of the box; API-key mode (Option A) needs one edit.
 
-### Option A — Org API key (default; best for headless/automation)
+### Option A — Org API key (best for headless/automation)
 
 | Variable | Required | Purpose |
 |----------|----------|---------|
 | `AGENT_TASK_API_KEY` | **yes** | Your org API key (`amk_…`), sent as `Authorization: Bearer …`. |
 
-Create an org API key in Agent Task (Settings → API keys), export it as `AGENT_TASK_API_KEY`,
-then install the plugin. The key is read from your environment — it is **never** committed into
-the plugin. This grants **org-wide** access and attributes actions to the key's creator.
-
-### Option B — OAuth (per-user, space-scoped; best for interactive use)
-
-The server also speaks OAuth (RFC 6749/8414/8707/7591/7009/9728) and is enabled on the dev host.
-Instead of a static key you sign in via the browser and consent to specific spaces; the token
-auto-rotates and is revocable. To use it, drop the `Authorization` header from `.mcp.json` so the
-client runs the OAuth flow on connect:
+Create an org API key in Agent Task (Settings → API keys), export it as `AGENT_TASK_API_KEY`, and
+add the header to `.mcp.json` so the key is sent on connect:
 
 ```json
 {
   "mcpServers": {
     "agent-task": {
       "type": "http",
-      "url": "https://app.dev.agent-task.com/v1/public/mcp"
+      "url": "https://app.agent-task.com/v1/public/mcp",
+      "headers": { "Authorization": "Bearer ${AGENT_TASK_API_KEY}" }
+    }
+  }
+}
+```
+
+The key is read from your environment — it is **never** committed into the plugin. This grants
+**org-wide** access and attributes actions to the key's creator.
+
+### Option B — OAuth (per-user, space-scoped; best for interactive use)
+
+The server also speaks OAuth (RFC 6749/8414/8707/7591/7009/9728) and is enabled on the production host.
+Instead of a static key you sign in via the browser and consent to specific spaces; the token
+auto-rotates and is revocable. The bundled `.mcp.json` already ships without an `Authorization`
+header, so this is the default — install and connect, and the client runs the OAuth flow:
+
+```json
+{
+  "mcpServers": {
+    "agent-task": {
+      "type": "http",
+      "url": "https://app.agent-task.com/v1/public/mcp"
     }
   }
 }
@@ -124,8 +138,8 @@ No `AGENT_TASK_API_KEY` needed in this mode. (claude.ai / Claude Desktop: add th
 **custom connector** to get the OAuth flow — note that path delivers the MCP **tools only**, not the
 slash commands/skills, which are part of this Claude Code plugin.)
 
-OAuth requires `MCP_SERVER_ENABLED` + `MCP_OAUTH_ENABLED` on the target deployment (set on dev;
-verify before pointing at a prod host). Full walkthrough: `docs/CONNECT_CLAUDE.md`.
+OAuth requires `MCP_SERVER_ENABLED` + `MCP_OAUTH_ENABLED` on the target deployment (set on the
+production host; verify before pointing at another host). Full walkthrough: `docs/CONNECT_CLAUDE.md`.
 
 ### Option C — Cursor IDE OAuth (Cursor Desktop + Cloud Agents)
 
@@ -145,7 +159,7 @@ Cursor supports MCP servers via OAuth with specific redirect URIs. Agent Task no
   "mcpServers": {
     "agent-task": {
       "type": "http",
-      "url": "https://app.dev.agent-task.com/v1/public/mcp"
+      "url": "https://app.agent-task.com/v1/public/mcp"
     }
   }
 }
@@ -160,8 +174,8 @@ Agent Task experience with commands, use Claude Code with this plugin.
 
 ### Pointing at another environment
 
-To point at a different host, edit the `url` in `.mcp.json` (defaults to the dev host
-`https://app.dev.agent-task.com/v1/public/mcp`).
+To point at a different host (e.g. the dev environment), edit the `url` in `.mcp.json` (defaults
+to the production host `https://app.agent-task.com/v1/public/mcp`).
 
 ## Automation (hooks) — optional
 

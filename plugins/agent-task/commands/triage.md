@@ -1,6 +1,6 @@
 ---
-description: Triage the Inbox / unsorted tasks — route each to a group + project, label, set priority, and flag duplicates.
-argument-hint: [optional: scope, e.g. "Inbox", a space, or a project]
+description: Triage the default group / unsorted tasks — route each to a group + project, label, set priority, and flag duplicates.
+argument-hint: [optional: scope, e.g. "Default group", a space, or a project]
 ---
 
 # /triage — process unsorted tasks
@@ -17,7 +17,7 @@ Scope hint from the user: **$ARGUMENTS**
 1. **Resolve the space.** `list_spaces`; if there's exactly one, use it, else use what `$ARGUMENTS`
    implies or ask once.
 2. **Find the untriaged tasks.** `list_tasks_and_subtasks({ spaceUuid })` (page through the cursor).
-   Treat as untriaged anything sitting in the **default / Inbox group**, or with **no project**, **no
+   Treat as untriaged anything sitting in the **default group** (formerly "Inbox"), or with **no project**, **no
    labels**, or **no priority** — i.e. tasks that were quick-captured and never sorted. Narrow to
    `$ARGUMENTS` if it named a group/project.
 3. **Propose a routing for each** (don't mutate yet):

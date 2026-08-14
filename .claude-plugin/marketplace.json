@@ -1,14 +1,32 @@
 {
   "name": "agent-task",
+  "description": "Official AgentTask plugin marketplace — connect Claude Code to your AgentTask backlog.",
   "owner": {
-    "name": "Agent Task"
+    "name": "Agent Task LLC",
+    "url": "https://www.agent-task.com"
   },
   "plugins": [
     {
       "name": "agent-task",
+      "displayName": "AgentTask",
       "source": "./plugins/agent-task",
       "version": "0.3.0",
-      "description": "Drive Agent Task from your agent: one install wires up the MCP connection and adds intent-level slash commands (/start, /plan, /update, /triage, /standup, /report, /organize, /note, /init, /finish, /crews) plus workflow skills — including crew personas that sync into real Claude Code subagents."
+      "description": "Drive Agent Task from your agent: one install wires up the MCP connection and adds intent-level slash commands (/start, /plan, /update, /triage, /standup, /report, /organize, /note, /init, /finish, /crews) plus workflow skills — including crew personas that sync into real Claude Code subagents.",
+      "author": {
+        "name": "Agent Task LLC",
+        "url": "https://www.agent-task.com"
+      },
+      "category": "Productivity",
+      "tags": [
+        "tasks",
+        "project-management",
+        "mcp",
+        "agents",
+        "backlog"
+      ],
+      "homepage": "https://app.agent-task.com",
+      "repository": "https://github.com/AgentTaskLLC/AgentTask-plugin",
+      "license": "SEE LICENSE IN LICENSE"
     }
   ]
 }
