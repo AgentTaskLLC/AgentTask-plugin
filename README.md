@@ -29,7 +29,7 @@ Restart Claude Code when prompted so the bundled MCP server connects.
 
 ## Authenticate
 
-The plugin connects to `https://app.dev.agent-task.com/v1/public/mcp`. Pick one:
+The plugin connects to `https://app.agent-task.com/v1/public/mcp`. Pick one:
 
 - **OAuth** (per-user, space-scoped) — recommended for interactive use. Remove the `Authorization`
   header from `plugins/agent-task/.mcp.json` and the client runs a browser login + consent flow on

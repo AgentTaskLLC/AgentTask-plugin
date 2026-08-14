@@ -46,6 +46,7 @@ reject it (`invalid input syntax for type uuid`). To act on it: `search({ query:
 | Update | `update_task`, `update_subtask`, `update_project`, `update_task_group`, `update_note`, `update_label` — each takes **any subset** of fields in one call |
 | Comment | `add_comment`, `update_comment`, `delete_comment` |
 | Attach | `list_attachments`, `download_attachments`, `prepare_attachment_upload` → `create_attachment_from_upload`, `delete_attachment` |
+| Link | `link_entities` / `unlink_entities` — connect any task ↔ project ↔ note pair (UUID or app URL; optional directional `role` like `blocks` for task/project pairs). Read links back via `fetch` (inlined `links`); both idempotent |
 | Route | `suggest_group` (ranked group suggestion + confidence, read-only) |
 
 `update_task` and `update_subtask` are polymorphic — pass only the fields you want to change
