@@ -1,1 +1,15 @@
 .DS_Store
+.claude/worktrees/
+.agent-task/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+__pycache__/
+*.py[cod]
+.venv/
+dist/
+build/
+.coverage
+.pytest_cache/

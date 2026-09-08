@@ -1,6 +1,7 @@
 ---
 description: Reorganize tasks in a chosen scope into a coherent structure — groups, projects, and labels.
-argument-hint: [optional: what/where to organize, e.g. "the Marketing project"]
+argument-hint: '[optional: what/where to organize, e.g. "the Marketing project"]'
+allowed-tools: mcp__plugin_agent-task_agent-task__list_spaces, mcp__plugin_agent-task_agent-task__list_projects, mcp__plugin_agent-task_agent-task__list_task_groups, mcp__plugin_agent-task_agent-task__list_labels, mcp__plugin_agent-task_agent-task__list_tasks_and_subtasks, mcp__plugin_agent-task_agent-task__create_task_group, mcp__plugin_agent-task_agent-task__create_project, mcp__plugin_agent-task_agent-task__create_label, mcp__plugin_agent-task_agent-task__update_task
 ---
 
 # /organize — reorganize work into a clean structure

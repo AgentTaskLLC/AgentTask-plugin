@@ -29,7 +29,7 @@ so a re-run replays the first result instead of posting the comment twice.
 
 When a coding task produces a pull request:
 
-1. Write the PR URL onto the task as soon as it exists: `update_task({ taskId, prUrl })`.
+1. Write the PR URL onto the task as soon as it exists: `update_task({ taskUuid, prUrl })`.
    (`prUrl` is validated as an http(s) URL.)
 2. Mention it in the next progress comment.
 3. Keep it current — if the PR is replaced, update `prUrl` again.

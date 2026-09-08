@@ -1,6 +1,7 @@
 ---
 description: Triage the default group / unsorted tasks — route each to a group + project, label, set priority, and flag duplicates.
-argument-hint: [optional: scope, e.g. "Default group", a space, or a project]
+argument-hint: '[optional: scope, e.g. "Default group", a space, or a project]'
+allowed-tools: mcp__plugin_agent-task_agent-task__list_spaces, mcp__plugin_agent-task_agent-task__list_projects, mcp__plugin_agent-task_agent-task__list_task_groups, mcp__plugin_agent-task_agent-task__list_labels, mcp__plugin_agent-task_agent-task__list_tasks_and_subtasks, mcp__plugin_agent-task_agent-task__search, mcp__plugin_agent-task_agent-task__suggest_group, mcp__plugin_agent-task_agent-task__create_label, mcp__plugin_agent-task_agent-task__update_task
 ---
 
 # /triage — process unsorted tasks
