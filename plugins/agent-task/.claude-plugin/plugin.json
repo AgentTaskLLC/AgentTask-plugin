@@ -2,8 +2,8 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "agent-task",
   "displayName": "AgentTask",
-  "version": "0.3.0",
-  "description": "Drive Agent Task from your agent: one install wires up the MCP connection and adds intent-level slash commands (/start, /plan, /update, /triage, /standup, /report, /organize, /note, /init, /finish, /crews) plus workflow skills — including crew personas that sync into real Claude Code subagents.",
+  "version": "0.4.0",
+  "description": "Agent Task workflows for tasks, projects, notes, reports, and crews. Shared skills for MCP-capable agents, with Claude Code commands and a read-only reporter.",
   "author": {
     "name": "AgentTask",
     "url": "https://www.agent-task.com"

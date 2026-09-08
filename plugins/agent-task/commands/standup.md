@@ -1,33 +1,16 @@
 ---
-description: Personal daily standup — what you moved, what's in progress, and your blockers (read-only).
-argument-hint: [optional: timeframe, e.g. "today" or "since friday"]
+description: Produce a read-only personal standup from task and activity evidence.
+argument-hint: "[timeframe or member]"
+allowed-tools: Task, mcp__plugin_agent-task_agent-task__fetch, mcp__plugin_agent-task_agent-task__search, mcp__plugin_agent-task_agent-task__list_spaces, mcp__plugin_agent-task_agent-task__list_projects, mcp__plugin_agent-task_agent-task__list_space_members, mcp__plugin_agent-task_agent-task__list_tasks_and_subtasks, mcp__plugin_agent-task_agent-task__list_subtasks, mcp__plugin_agent-task_agent-task__list_comments, mcp__plugin_agent-task_agent-task__list_day_log, mcp__plugin_agent-task_agent-task__get_day_deck
 ---
 
-# /standup — your daily standup
+# Standup
 
-A tight, personal "yesterday / today / blockers" for **you** (`assignee: "me"`). This command is
-**read-only** — it never mutates tasks. Read the `agent-task-workflow` skill first.
+Read `agent-task-workflow` and `agent-task-reporting`. Input: **$ARGUMENTS**.
+Default to the last working day (Monday includes Friday). Resolve the member:
+`"me"` works with OAuth; org API keys require an explicit member.
 
-Timeframe hint from the user: **$ARGUMENTS**
-
-## Gather
-
-- **Timeframe.** Default: since your last working day (treat a Monday run as "since Friday");
-  honor `$ARGUMENTS` if it gives a range.
-- `list_tasks_and_subtasks({ assignee: "me" })` — omit `spaceUuid` to span every space you're in
-  (page through the cursor). Pull the latest `list_comments` on your in-progress items for status.
-- Filter by date **client-side** (there's no server-side date filter): what moved to `done` in the
-  window, what's `in_progress`, what's `isBlocked`, and your top `todo` items.
-
-## Compose
-
-Write a short, scannable standup (omit empty sections):
-
-- **Done** — tasks you completed in the window (`AI-XX` + title).
-- **In progress** — what you're actively on, each with a one-line "where it's at" from the latest
-  comment.
-- **Blocked** — `isBlocked` or stalled items, with the blocker if known.
-- **Up next** — the 2–3 `todo` items you'd pick up next.
-
-Keep it to codes + titles + one-liners — no walls of text. End by offering to post it as a comment
-on a task/project or save it as a note (`/note`) if they want it persisted.
+Gather current tasks and supported activity history, following cursors. Use the
+bundled reporter when available and delegation is authorized. Keep completed,
+in-progress, blockers, and next-work sections short. Never infer completion dates
+from last-update timestamps or persist the result without a separate request.

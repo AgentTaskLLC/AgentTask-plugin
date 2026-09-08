@@ -1,6 +1,7 @@
 ---
 description: Close out completed work — resolve subtasks, post a summary, confirm the PR is merged, and set the task to done.
-argument-hint: [task code/title, or empty for the active task]
+argument-hint: "[task code/title, or empty for the active task]"
+allowed-tools: mcp__plugin_agent-task_agent-task__fetch, mcp__plugin_agent-task_agent-task__search, mcp__plugin_agent-task_agent-task__list_subtasks, mcp__plugin_agent-task_agent-task__list_space_members, mcp__plugin_agent-task_agent-task__update_subtask, mcp__plugin_agent-task_agent-task__update_task, mcp__plugin_agent-task_agent-task__add_comment
 ---
 
 # /finish — wrap up a task
@@ -12,8 +13,9 @@ Input from the user: **$ARGUMENTS** (an `AI-XX` code / title, or empty for the a
 
 ## Steps
 
-1. **Resolve the task.** From `$ARGUMENTS` (`search`), or if empty use the active in-progress task
-   (`start_work` resumes it / `list_tasks_and_subtasks({ status: "in_progress", assignee: "me" })`).
+1. **Resolve the task.** Use `fetch` for a code/URL, or `search` for a title. If empty, read the
+   active task from session context or listings; do not use `start_work` for a lookup.
+   With an org API key, resolve an explicit member instead of `assignee: "me"`.
 2. **Check subtasks.** `list_subtasks`. If any are unresolved, list them and ask whether to close
    them too (`update_subtask({ status: done })`) or leave them — don't silently close children.
 3. **Coding task?** If it has a PR (`prUrl`) or should have one:

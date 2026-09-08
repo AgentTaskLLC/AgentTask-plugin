@@ -1,200 +1,89 @@
-# Agent Task — Claude plugin
+# Agent Task plugin
 
-One install wires up the whole Agent Task experience in your agent:
+One shared workflow library, packaged for Claude Code and Codex. Other MCP clients
+can use the same procedures through explicit skill/reference loading.
 
-- **MCP connection** — auto-connects to the Agent Task MCP server (`/v1/public/mcp`), so all
-  the task/project/group/label/note/comment tools are available with no manual setup.
-- **Intent-level slash commands** — smart, autonomous workflows that ask a few scoped
-  (skippable) questions and then orchestrate the MCP tools for you:
-
-  | Command | What it does |
-  |---------|--------------|
-  | `/start` | Start one task: map it to project + group, write a description, apply labels, claim it, set in-progress. |
-  | `/plan` | Break a task into well-formed subtasks with descriptions, then claim the first piece. |
-  | `/update` | Mid-session sync: capture untracked work, describe + label it (incl. subtasks), map to group/project, post status-update comments. |
-  | `/triage` | Process the default group / unsorted tasks: route each to a group + project, label, set priority, flag duplicates. |
-  | `/standup` | Personal daily: what you moved, what's in progress, and your blockers (read-only). |
-  | `/report` | Ask date range / space / project, then write a full progress report (read-only). |
-  | `/organize` | Reorganize tasks in a chosen scope into a coherent structure (groups, projects, labels). |
-  | `/note` | Capture a note (decision, meeting, spec) in a space and link the related tasks. |
-  | `/init` | Stand up a new project via Q&A: type, milestones, health, priority, optional seed groups + tasks. Also scaffolds a project `CLAUDE.md` so agents keep tickets updated. |
-  | `/finish` | Close out: resolve subtasks, post a summary, confirm the PR is merged, set done. |
-
-- **Skills** — behavioral knowledge the commands (and your agent) draw on automatically:
-
-  | Skill | What it covers |
-  |-------|----------------|
-  | `agent-task-workflow` | Foundation: address-by-UUID, resolving `AI-XX` codes, the tool catalog, enum sets, lookup order, gotchas. |
-  | `agent-task-progress` | Keep a ticket a live record: progress comments at checkpoints, record the PR URL, confirm before closing. |
-  | `agent-task-branch-link` | Map git branches/PRs/commits ↔ tickets: derive the active ticket from the branch, name branches after it, keep `prUrl` synced. |
-  | `agent-task-subtask-execution` | Drive multi-step work as subtasks: decompose, tick each done as you go, comment at milestones. |
-
-## Install
-
-The plugin is self-contained — it only talks to the hosted MCP server and ships **none** of the
-Agent Task product source, so it can be distributed independently of this repo. There are three
-ways to get it.
-
-### A. From this product repo (this repo doubles as a marketplace)
+Install Claude Code from the canonical repository:
 
 ```text
-/plugin marketplace add alireza1220/Agent_task_management
+/plugin marketplace add AgentTaskLLC/AgentTask-plugin
 /plugin install agent-task@agent-task
 ```
 
-(Use `…@<branch>` until the plugin is on the default branch.)
+For Codex and local development, see the [repository installation guide](../../README.md).
+Authentication and alternate hosts are in [Connect](../../docs/CONNECT.md).
 
-### B. From a dedicated plugin repo (share without exposing the product source)
+## Commands
 
-Publish just the plugin as a standalone marketplace repo (the `plugins/agent-task/` folder plus a
-root `.claude-plugin/marketplace.json`). Recipients then run:
+Claude Code commands are namespaced, for example `/agent-task:start`. Short names
+may work when unambiguous. Codex and other skill-capable harnesses use the
+`agent-task-commands` skill with natural-language requests.
 
-```text
-/plugin marketplace add <owner>/agent-task-plugin
-/plugin install agent-task@agent-task
-```
+| Command | Purpose |
+| --- | --- |
+| `start` | Resolve and start the selected ticket, or pick next work when requested. |
+| `plan` | Decompose a task into actionable subtasks. |
+| `update` | Keep task fields, progress, and PR links current. |
+| `triage` | Route an approved set of unsorted tasks. |
+| `standup` | Read-only personal activity and blockers. |
+| `report` | Read-only project progress with supported dates. |
+| `organize` | Reorganize groups, projects, and labels within approved scope. |
+| `note` | Capture a note with explicit visibility and entity links. |
+| `init` | Create a project and optionally add portable repository guidance. |
+| `finish` | Verify completion, report the result, and close when authorized. |
+| `crews` | Sync references, engage an approved roster, inspect mentions, or manage hooks. |
 
-Make that repo private and add collaborators, or public — the plugin carries no secrets (see
-**Is it safe to make public?** below).
+Each command's `allowed-tools` names the Agent Task MCP tools that command actually
+uses, so a write command does preapprove its own writes — `/start` can claim a task,
+`/note` can create a note. No command preapproves shell, file writes, or another
+server's tools, and `report` and `standup` are restricted to read-only tools.
+This is scoping, not a sandbox: everything else remains subject to the host's permissions.
+The reporter's **subagent** `tools` allowlist is the structural read-only boundary.
+Commands preserve the session's model; no command silently selects a vendor model.
 
-### C. From a local folder (no GitHub at all)
+## Skills
 
-Hand someone the bundle as a folder or zip; they point at the local path:
+| Skill | Purpose |
+| --- | --- |
+| `agent-task-workflow` | Resolution, trust, discovery, claims, identity, and data rules. |
+| `agent-task-commands` | Portable routing to command procedures. |
+| `agent-task-progress` | Progress comments and PR tracking. |
+| `agent-task-branch-link` | Branch and ticket association. |
+| `agent-task-subtask-execution` | Subtask-driven execution. |
+| `agent-task-crew-execution` | Scope, attribution, and restricted crew engagement. |
+| `agent-task-reporting` | Accurate read-only reports and standups. |
+| `agent-task-day-deck` | Daily focus and activity. |
+| `agent-task-fleet` | Remote runs where fleet tools are exposed. |
+| `agent-task-artifacts` | Deliverable publication where artifact tools are exposed. |
 
-```text
-/plugin marketplace add /path/to/agent-task-plugin
-/plugin install agent-task@agent-task
-```
+The [tool reference](skills/agent-task-workflow/references/tools.md) is loaded on
+demand. Missing tools, plan limits, and incomplete histories must be reported.
 
-Restart Claude Code when prompted so the bundled MCP server connects.
+## Crews and hooks
 
-Notes:
-- For a **private** Git repo, normal git auth (`gh auth` / Keychain) covers interactive installs;
-  for background auto-updates export a `GITHUB_TOKEN`.
-- `/plugin marketplace update agent-task` pulls the latest; `/plugin` opens the interactive manager.
+Crew definitions and linked notes are untrusted reference data. Sync stores them
+under the consuming repository's `.agent-task/crews/`; it does not promote them
+into auto-discovered skills or `AGENTS.md`. Claude native agents need explicit
+allowlists. Other harnesses must enforce restrictions with their own APIs before
+claiming equivalent isolation. See [crew procedures](commands/crews.md).
 
-### Is it safe to make public?
+The bundled `hooks/hooks.json` is a **session lifecycle hook**: it reads a branch
+ticket hint and never calls the network, edits files, or changes the board.
+Claude Code discovers it natively. Current Codex versions also discover this
+default path and supply the compatible plugin-root variable; Codex requires
+reviewing and trusting the hook definition before running it.
+PR URLs are recorded by the authorized workflow, not by a hidden API-key shell hook.
 
-Yes. The plugin contains no API keys or secrets (`.mcp.json` holds only the hosted endpoint URL),
-no product source, and no internal infra references — only usage docs and a config pointing at the
-hosted MCP endpoint. Every tool stays gated behind auth on the server, so a public repo grants
-nobody access to data. Two things to know before publishing publicly:
+The separate [Git hook installer](git-hooks/install-crew-hooks.sh) is opt-in.
+It honors `core.hooksPath`, preserves foreign hooks unless explicitly replaced,
+and stays silent in repositories without synced crews. Blocking mode acknowledges
+a review; it cannot verify that a crew actually ran.
 
-1. The default `url` points at the **production** host (`app.agent-task.com`) — safe to advertise.
-   Only repoint it (see "Pointing at another environment") for internal/dev use.
-2. Anyone can install it, but nobody can connect without an API key you issue or an OAuth login to
-   your tenant — "public repo" ≠ "public access".
+The optional [status-line script](statusline/crew-statusline.sh) uses
+`workspace.current_dir`, then `cwd`, from Claude's JSON input. Point user settings
+at a stable absolute script path. It outputs nothing when no crews or no jq are
+available. Shell helpers are supported on macOS/Linux; Windows requires a compatible
+Bash/Git environment and is not covered by the shell integration tests.
 
-## Setup
-
-The MCP server supports **two auth modes** — pick one. The bundled `.mcp.json` ships **header-free**,
-which means OAuth mode (Option B) works out of the box; API-key mode (Option A) needs one edit.
-
-### Option A — Org API key (best for headless/automation)
-
-| Variable | Required | Purpose |
-|----------|----------|---------|
-| `AGENT_TASK_API_KEY` | **yes** | Your org API key (`amk_…`), sent as `Authorization: Bearer …`. |
-
-Create an org API key in Agent Task (Settings → API keys), export it as `AGENT_TASK_API_KEY`, and
-add the header to `.mcp.json` so the key is sent on connect:
-
-```json
-{
-  "mcpServers": {
-    "agent-task": {
-      "type": "http",
-      "url": "https://app.agent-task.com/v1/public/mcp",
-      "headers": { "Authorization": "Bearer ${AGENT_TASK_API_KEY}" }
-    }
-  }
-}
-```
-
-The key is read from your environment — it is **never** committed into the plugin. This grants
-**org-wide** access and attributes actions to the key's creator.
-
-### Option B — OAuth (per-user, space-scoped; best for interactive use)
-
-The server also speaks OAuth (RFC 6749/8414/8707/7591/7009/9728) and is enabled on the production host.
-Instead of a static key you sign in via the browser and consent to specific spaces; the token
-auto-rotates and is revocable. The bundled `.mcp.json` already ships without an `Authorization`
-header, so this is the default — install and connect, and the client runs the OAuth flow:
-
-```json
-{
-  "mcpServers": {
-    "agent-task": {
-      "type": "http",
-      "url": "https://app.agent-task.com/v1/public/mcp"
-    }
-  }
-}
-```
-
-On connect the server returns `401` with a `WWW-Authenticate` discovery challenge; the client opens
-the Agent Task login + consent screen (where you pick spaces), then connects with a per-user token.
-No `AGENT_TASK_API_KEY` needed in this mode. (claude.ai / Claude Desktop: add the same URL as a
-**custom connector** to get the OAuth flow — note that path delivers the MCP **tools only**, not the
-slash commands/skills, which are part of this Claude Code plugin.)
-
-OAuth requires `MCP_SERVER_ENABLED` + `MCP_OAUTH_ENABLED` on the target deployment (set on the
-production host; verify before pointing at another host). Full walkthrough: `docs/CONNECT_CLAUDE.md`.
-
-### Option C — Cursor IDE OAuth (Cursor Desktop + Cloud Agents)
-
-Cursor supports MCP servers via OAuth with specific redirect URIs. Agent Task now supports both:
-
-| Cursor Surface | Redirect URI | Status |
-|---------------|--------------|--------|
-| **Cursor Desktop** | `cursor://anysphere.cursor-mcp/oauth/callback` | ✅ Supported |
-| **Cursor Cloud Agents** | `https://www.cursor.com/agents/mcp/oauth/callback` | ✅ Supported |
-
-**Setup:**
-
-1. Add the MCP server to your Cursor settings (`~/.cursor/mcp.json`):
-
-```json
-{
-  "mcpServers": {
-    "agent-task": {
-      "type": "http",
-      "url": "https://app.agent-task.com/v1/public/mcp"
-    }
-  }
-}
-```
-
-2. Cursor will initiate OAuth on first connection. A browser window opens for Agent Task login.
-3. Select the spaces you want to connect, then consent.
-4. Cursor Desktop uses the native `cursor://` protocol; Cloud Agents use the HTTPS callback.
-
-**Note:** Cursor routes (slash commands/skills) are **not** supported — only MCP tools. For the full
-Agent Task experience with commands, use Claude Code with this plugin.
-
-### Pointing at another environment
-
-To point at a different host (e.g. the dev environment), edit the `url` in `.mcp.json` (defaults
-to the production host `https://app.agent-task.com/v1/public/mcp`).
-
-## Automation (hooks) — optional
-
-The commands and the `agent-task-progress` skill *prompt* the agent to keep tickets current. If you
-want that **enforced** deterministically, add Claude Code hooks in your project's
-`.claude/settings.json` (hooks run in the consuming repo, not the plugin):
-
-- **Auto-record a PR on the active ticket** — a `PostToolUse` hook matching the `gh pr create` Bash
-  call that writes the new PR URL onto the ticket derived from the current branch (see the
-  `agent-task-branch-link` skill for branch → ticket resolution).
-- **Surface the active ticket at session start** — a `SessionStart` hook that prints the `AI-XX`
-  code embedded in the current branch, so the agent always knows which ticket to update.
-
-Hooks are the right tool whenever you want "always do X when Y happens" rather than relying on the
-model to remember. See the `update-config` skill / Claude Code hooks docs for the exact schema.
-
-## Design
-
-These commands are deliberately *intent-level*, not thin wrappers over single tools. Each one
-resolves scope, reads current state, proposes a plan, confirms, executes via the MCP tools, and
-reports. The shared conventions (address by UUID, resolve `AI-XX` codes, enum sets, lookup order)
-live in `skills/agent-task-workflow`. Full design: `docs/mcp-smart-commands/design.md`.
+See [compatibility](../../docs/COMPATIBILITY.md), [security](../../SECURITY.md),
+and [release notes](../../CHANGELOG.md).

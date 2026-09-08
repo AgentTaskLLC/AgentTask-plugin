@@ -1,6 +1,7 @@
 ---
 description: Capture a note (decision, meeting, spec) in a space and link the related tasks.
-argument-hint: [the note content or a topic]
+argument-hint: "[the note content or a topic]"
+allowed-tools: mcp__plugin_agent-task_agent-task__list_spaces, mcp__plugin_agent-task_agent-task__fetch, mcp__plugin_agent-task_agent-task__create_note, mcp__plugin_agent-task_agent-task__link_entities, mcp__plugin_agent-task_agent-task__add_comment
 ---
 
 # /note — capture a note
@@ -22,6 +23,8 @@ Input from the user: **$ARGUMENTS** (the note body, a topic, or empty — then u
 4. **Link related tasks.** Mention related `AI-XX` codes in the body. For closely-tied tasks, offer
    to drop a one-line `add_comment` on them pointing back to the note.
 5. **Create.** `create_note({ spaceUuid, title, content, visibility })`.
+   When actual links were requested, call `link_entities` with resolved UUIDs; a code
+   mentioned in the body does not create a relationship.
 
 ## Report
 

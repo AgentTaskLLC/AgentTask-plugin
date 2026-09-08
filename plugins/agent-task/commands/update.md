@@ -1,6 +1,7 @@
 ---
 description: Sync the board with reality — capture untracked work, describe + label it, map to group/project, and post status-update comments.
-argument-hint: [optional: scope hint, e.g. "this project" or "everything"]
+argument-hint: '[optional: scope hint, e.g. "this project" or "everything"]'
+allowed-tools: Read, Grep, Glob, mcp__plugin_agent-task_agent-task__list_spaces, mcp__plugin_agent-task_agent-task__list_projects, mcp__plugin_agent-task_agent-task__list_task_groups, mcp__plugin_agent-task_agent-task__list_labels, mcp__plugin_agent-task_agent-task__list_space_members, mcp__plugin_agent-task_agent-task__list_tasks_and_subtasks, mcp__plugin_agent-task_agent-task__suggest_group, mcp__plugin_agent-task_agent-task__create_task, mcp__plugin_agent-task_agent-task__create_subtask, mcp__plugin_agent-task_agent-task__create_label, mcp__plugin_agent-task_agent-task__update_task, mcp__plugin_agent-task_agent-task__update_subtask, mcp__plugin_agent-task_agent-task__add_comment
 ---
 
 # /update — make the board reflect the work
@@ -26,7 +27,8 @@ Scope hint from the user: **$ARGUMENTS**
      ones. Apply labels to **subtasks** too (`update_subtask({ labels })`).
    - **Group + project** — map each item via `update_task({ groupUuid, projectUuid })`; use
      `suggest_group` (or group `description`s) as routing hints.
-   - **Assignee on claim** — if you're actively doing it, `assignee: "me"`.
+   - **Assignee** — preserve existing assignments. For requested changes, resolve a member;
+     `assignee: "me"` requires OAuth and is unsupported with org API keys.
    - **Status** — advance obvious ones (e.g. clearly-started → `in_progress`). For anything
      non-trivial, **flag it** rather than silently flipping.
 5. **Record PR links.** If a coding task has an open PR, set `update_task({ prUrl })`.

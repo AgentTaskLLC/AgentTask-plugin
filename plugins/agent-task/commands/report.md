@@ -1,44 +1,16 @@
 ---
-description: Write a full progress report — ask date range / space / project, then summarize the tasks (read-only).
-argument-hint: [optional: timeframe, space, or project]
+description: Produce a read-only progress report with accurate dates and explicit data gaps.
+argument-hint: "[timeframe, space, or project]"
+allowed-tools: Task, mcp__plugin_agent-task_agent-task__fetch, mcp__plugin_agent-task_agent-task__search, mcp__plugin_agent-task_agent-task__list_spaces, mcp__plugin_agent-task_agent-task__list_projects, mcp__plugin_agent-task_agent-task__list_space_members, mcp__plugin_agent-task_agent-task__list_tasks_and_subtasks, mcp__plugin_agent-task_agent-task__list_subtasks, mcp__plugin_agent-task_agent-task__list_comments, mcp__plugin_agent-task_agent-task__list_day_log
 ---
 
-# /report — progress report
+# Progress report
 
-Generate a clear, structured progress report. This command is **read-only** — it summarizes, it
-never mutates tasks. Read the `agent-task-workflow` skill first.
+Read `agent-task-workflow` and `agent-task-reporting`. Scope: **$ARGUMENTS**.
+Resolve the timeframe and project/space, defaulting to the last seven days.
+Use the bundled `agent-task:reporter` when available and delegation is authorized;
+otherwise follow the reporting skill directly with read tools only.
 
-Hint from the user: **$ARGUMENTS**
-
-## Clarify (skippable)
-
-Ask only what isn't already implied by `$ARGUMENTS`; offer sensible defaults:
-
-1. **Date range** — e.g. last week / this sprint / an explicit `YYYY-MM-DD .. YYYY-MM-DD`.
-   Default: the last 7 days.
-2. **Space** — only ask if the user has more than one (`list_spaces`). Otherwise use the single one.
-3. **Project** — a specific project, or all projects in the space. Default: all.
-
-## Gather
-
-- `list_tasks_and_subtasks` for the scope (filter by `projectUuid` / `groupUuid` / `status` as
-  chosen; omit `spaceUuid` to span every space). Page through `nextCursor` so the report isn't
-  truncated. For any item you need in depth, a single `fetch` now returns the full body plus inline
-  `attachments`, recent `comments`, `subtasks`, and the active `claim` (who/what's executing it) —
-  often enough without separate `list_comments`/`list_subtasks` calls.
-- Filter to the chosen date range **client-side** on the returned items (created/updated/completed
-  within it) — there's no server-side date filter.
-
-## Compose
-
-Write the report as markdown with these sections (omit any that are empty):
-
-- **Summary** — 2–3 sentences: overall momentum in the period.
-- **Completed** — tasks moved to `done` in the range (grouped by project/group).
-- **In progress** — `in_progress` tasks, with the latest comment/status note.
-- **Blocked / at risk** — `isBlocked` tasks or stalled ones; say why if known.
-- **New / backlog** — notable items created in the range.
-- **By project** (if multiple) — a one-line health line per project.
-
-Keep it scannable: codes (`AI-XX`) + titles, short status notes, no walls of text. End by offering
-to post it as a comment on a project/task or save it as a note if the user wants it persisted.
+Do not mutate tasks, claims, notes, or comments. Do not infer completion dates
+from `updatedAt`. Report current blockers separately from changes in the window.
+Return the report in the conversation; persistence is a separate user request.

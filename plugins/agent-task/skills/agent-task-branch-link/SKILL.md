@@ -16,7 +16,8 @@ When work is already on a branch, infer the ticket instead of asking:
    typically `AI-<n>` / `WORK-<n>`, e.g. `fix/ai-306-custom-field…` → `AI-306`,
    `feat/AI-57-github-app` → `AI-57` (case-insensitive; the code is usually the first
    `[A-Z]+-\d+` token).
-2. Resolve it to a UUID with `search({ query: "AI-306" })` (codes can't be passed to the tools).
+2. Resolve it with `fetch({ ref: "AI-306" })`; use the returned task UUID for mutations.
+   The user's explicit ticket selection takes precedence over a branch-derived hint.
 3. If the branch carries no code, check recent commit subjects (`git log -n 20 --format=%s`) for a
    `AI-XX` reference before falling back to asking the user.
 
@@ -34,7 +35,7 @@ When you start a ticket and then create a branch:
 
 ## Keeping the link current
 
-- When a PR opens, record it on the ticket immediately: `update_task({ taskId, prUrl })`, and
+- When a PR opens, record it on the ticket immediately: `update_task({ taskUuid, prUrl })`, and
   mention it in a comment. Re-set `prUrl` if the PR is replaced.
 - One branch ↔ one ticket. If a branch spans several tickets, pick the primary for `prUrl` and
   comment the others, or split the work.
