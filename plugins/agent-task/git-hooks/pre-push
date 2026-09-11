@@ -36,7 +36,7 @@ log() {
   if [ "$SILENT" != true ]; then printf '%s\n' "$*" >&2; fi
   return 0
 }
-log "Agent Task: synced crews are present; check relevant crew reviews before pushing."
+log "AgentTask: synced crews are present; check relevant crew reviews before pushing."
 log "Use your harness's crew workflow (Claude Code: /agent-task:crews check)."
 
 if [ "$BLOCKING" = true ] && [ "${AGENT_TASK_HOOK_ACK:-}" != 1 ]; then

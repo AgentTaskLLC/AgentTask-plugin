@@ -41,7 +41,7 @@ Restoring a snapshot replaces content: review the version and authorization firs
 
 Prepare, upload to the returned signed destination, then create the record only
 after upload success. Signed URLs are credentials; never post them in comments.
-Do not forward the Agent Task bearer token to the storage destination.
+Do not forward the AgentTask bearer token to the storage destination.
 
 ## Crews
 

@@ -1,7 +1,7 @@
 {
   "name": "agent-task",
   "interface": {
-    "displayName": "Agent Task"
+    "displayName": "AgentTask"
   },
   "plugins": [
     {

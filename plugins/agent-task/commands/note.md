@@ -6,7 +6,7 @@ allowed-tools: mcp__plugin_agent-task_agent-task__list_spaces, mcp__plugin_agent
 
 # /note — capture a note
 
-Persist a decision, meeting summary, spec, or scratch idea as an Agent Task **note**, and link it to
+Persist a decision, meeting summary, spec, or scratch idea as an AgentTask **note**, and link it to
 the work it relates to. Be autonomous: draft a clean note from the input/conversation and confirm
 only what you can't infer. Read the `agent-task-workflow` skill first.
 

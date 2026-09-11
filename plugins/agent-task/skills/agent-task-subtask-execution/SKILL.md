@@ -1,9 +1,9 @@
 ---
 name: agent-task-subtask-execution
-description: Drive multi-step (especially coding) work as Agent Task subtasks — decompose the ticket, mark each subtask done as you finish it, and comment at milestones. Use during sustained execution of a claimed task.
+description: Drive multi-step (especially coding) work as AgentTask subtasks — decompose the ticket, mark each subtask done as you finish it, and comment at milestones. Use during sustained execution of a claimed task.
 ---
 
-# Agent Task — subtask-driven execution
+# AgentTask — subtask-driven execution
 
 Make the ticket mirror your actual execution so anyone watching sees real-time progress. Read
 `agent-task-workflow` for the tools and `agent-task-progress` for the commenting cadence.

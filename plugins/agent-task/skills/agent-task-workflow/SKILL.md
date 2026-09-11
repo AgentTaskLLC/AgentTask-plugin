@@ -1,11 +1,11 @@
 ---
 name: agent-task-workflow
-description: Resolve Agent Task entities and discover MCP tools for accurate, scoped, retry-safe task and project work in any harness.
+description: Resolve AgentTask entities and discover MCP tools for accurate, scoped, retry-safe task and project work in any harness.
 ---
 
-# Agent Task workflow
+# AgentTask workflow
 
-Discover this session's exact Agent Task tool names and read their live schemas.
+Discover this session's exact AgentTask tool names and read their live schemas.
 Prefixes vary across Claude Code, Codex, and connectors. The live schema governs
 parameters and availability. Do not assume a shell, subagent, or scheduler exists.
 

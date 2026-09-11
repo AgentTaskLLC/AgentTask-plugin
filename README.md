@@ -1,4 +1,4 @@
-# Agent Task
+# AgentTask
 
 Task, project, note, report, and crew workflows for MCP-capable coding agents.
 
@@ -9,7 +9,7 @@ separately; an MCP connection alone does not install commands, skills, or agents
 
 Canonical repository: [AgentTaskLLC/AgentTask-plugin](https://github.com/AgentTaskLLC/AgentTask-plugin).
 Personal forks and mirrors are development copies. The plugin is independent of
-the Agent Task product source and connects to the hosted service.
+the AgentTask product source and connects to the hosted service.
 
 ## Install
 
@@ -75,4 +75,4 @@ shellcheck plugins/agent-task/git-hooks/* plugins/agent-task/scripts/*.sh plugin
 
 ## License
 
-Proprietary. See [LICENSE](LICENSE). Copyright (c) 2025 Agent Task LLC.
+Proprietary. See [LICENSE](LICENSE). Copyright (c) 2025 AgentTask LLC.
