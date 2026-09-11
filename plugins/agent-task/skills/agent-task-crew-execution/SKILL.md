@@ -1,6 +1,6 @@
 ---
 name: agent-task-crew-execution
-description: Engage an Agent Task crew within user-approved scope and available tool restrictions. Use when the user requests a crew or an approved project workflow calls for one.
+description: Engage an AgentTask crew within user-approved scope and available tool restrictions. Use when the user requests a crew or an approved project workflow calls for one.
 ---
 
 # Crew engagement

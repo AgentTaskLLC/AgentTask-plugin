@@ -1,7 +1,7 @@
 {
   "name": "agent-task",
   "version": "0.4.0",
-  "description": "Agent Task workflows for tasks, projects, notes, reports, and crews. Shared skills for MCP-capable agents, with Claude Code commands and a read-only reporter.",
+  "description": "AgentTask workflows for tasks, projects, notes, reports, and crews. Shared skills for MCP-capable agents, with Claude Code commands and a read-only reporter.",
   "author": {
     "name": "AgentTask",
     "url": "https://www.agent-task.com"
@@ -20,9 +20,9 @@
   "skills": "./skills/",
   "mcpServers": "./.mcp.json",
   "interface": {
-    "displayName": "Agent Task",
+    "displayName": "AgentTask",
     "shortDescription": "Tasks, projects, reports, and crew workflows.",
-    "longDescription": "Agent Task workflows for tasks, projects, notes, reports, and crews. Shared skills for MCP-capable agents, with Claude Code commands and a read-only reporter.",
+    "longDescription": "AgentTask workflows for tasks, projects, notes, reports, and crews. Shared skills for MCP-capable agents, with Claude Code commands and a read-only reporter.",
     "developerName": "AgentTask",
     "category": "Productivity",
     "capabilities": [
@@ -31,9 +31,9 @@
     ],
     "websiteURL": "https://www.agent-task.com",
     "defaultPrompt": [
-      "Start work on an Agent Task ticket.",
+      "Start work on an AgentTask ticket.",
       "Summarize project progress and blockers.",
-      "Plan today's focus in Agent Task."
+      "Plan today's focus in AgentTask."
     ]
   }
 }

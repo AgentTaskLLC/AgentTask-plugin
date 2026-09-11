@@ -1,6 +1,6 @@
 {
   "name": "agent-task",
-  "description": "Agent Task plugin marketplace. Canonical source: AgentTaskLLC/AgentTask-plugin.",
+  "description": "AgentTask plugin marketplace. Canonical source: AgentTaskLLC/AgentTask-plugin.",
   "owner": {
     "name": "Agent Task LLC",
     "url": "https://www.agent-task.com"
@@ -10,9 +10,9 @@
       "name": "agent-task",
       "displayName": "AgentTask",
       "source": "./plugins/agent-task",
-      "description": "Task, project, note, report, and crew workflows backed by the Agent Task MCP server.",
+      "description": "Task, project, note, report, and crew workflows backed by the AgentTask MCP server.",
       "author": {
-        "name": "Agent Task LLC",
+        "name": "AgentTask",
         "url": "https://www.agent-task.com"
       },
       "category": "Productivity",

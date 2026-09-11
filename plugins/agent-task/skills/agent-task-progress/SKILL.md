@@ -1,9 +1,9 @@
 ---
 name: agent-task-progress
-description: How to keep an Agent Task ticket alive while you work — post periodic progress comments, record a PR URL when a coding task opens a PR, and confirm with the user before flipping status to done. Use during any sustained work on a claimed task, and whenever a pull request is created for a task.
+description: How to keep an AgentTask ticket alive while you work — post periodic progress comments, record a PR URL when a coding task opens a PR, and confirm with the user before flipping status to done. Use during any sustained work on a claimed task, and whenever a pull request is created for a task.
 ---
 
-# Agent Task — progress & PR-link behavior
+# AgentTask — progress & PR-link behavior
 
 Keep the ticket a faithful, live record of the work without nagging the user. Read the
 `agent-task-workflow` skill for the tool surface.

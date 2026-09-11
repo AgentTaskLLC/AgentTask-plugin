@@ -19,7 +19,7 @@ def expected_codex_manifest():
         "skills": "./skills/",
         "mcpServers": "./.mcp.json",
         "interface": {
-            "displayName": "Agent Task",
+            "displayName": "AgentTask",
             "shortDescription": "Tasks, projects, reports, and crew workflows.",
             "longDescription": source["description"],
             "developerName": source["author"]["name"],
@@ -27,9 +27,9 @@ def expected_codex_manifest():
             "capabilities": ["Read", "Write"],
             "websiteURL": "https://www.agent-task.com",
             "defaultPrompt": [
-                "Start work on an Agent Task ticket.",
+                "Start work on an AgentTask ticket.",
                 "Summarize project progress and blockers.",
-                "Plan today's focus in Agent Task.",
+                "Plan today's focus in AgentTask.",
             ],
         },
     })

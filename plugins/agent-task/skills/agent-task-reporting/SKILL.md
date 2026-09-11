@@ -1,6 +1,6 @@
 ---
 name: agent-task-reporting
-description: Produce read-only Agent Task reports and standups with sourced dates, pagination, and explicit uncertainty. Use for progress, blockers, activity summaries, or daily standups.
+description: Produce read-only AgentTask reports and standups with sourced dates, pagination, and explicit uncertainty. Use for progress, blockers, activity summaries, or daily standups.
 ---
 
 # Reporting

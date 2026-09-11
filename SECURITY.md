@@ -11,7 +11,7 @@ Shared skills state this boundary. They are model instructions, not a sandbox.
 Use the harness's actual tool restrictions for enforceable isolation. Claude's
 reporter has an explicit read-only allowlist without shell, write, delegation, or
 MCP mutation tools. Command `allowed-tools` settings are not equivalent to that
-subagent restriction: a write command preapproves the Agent Task writes it performs.
+subagent restriction: a write command preapproves the AgentTask writes it performs.
 What every command is denied is shell, file writes, other servers' MCP tools, and
 wildcards; `report` and `standup` are additionally denied every mutating tool.
 

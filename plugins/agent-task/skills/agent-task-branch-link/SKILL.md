@@ -1,9 +1,9 @@
 ---
 name: agent-task-branch-link
-description: Map between git branches/PRs/commits and Agent Task tickets — derive the active AI-XX ticket from the branch name, name new branches/commits after the ticket, and keep the PR link in sync. Use whenever you work on code that belongs to an Agent Task ticket.
+description: Map between git branches/PRs/commits and AgentTask tickets — derive the active AI-XX ticket from the branch name, name new branches/commits after the ticket, and keep the PR link in sync. Use whenever you work on code that belongs to an AgentTask ticket.
 ---
 
-# Agent Task — branch ↔ ticket linking
+# AgentTask — branch ↔ ticket linking
 
 Keep git and the ticket pointing at each other so the right ticket gets updated without re-asking.
 Read `agent-task-workflow` for the tool surface and the `AI-XX` → UUID resolution rule.

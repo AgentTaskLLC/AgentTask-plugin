@@ -1,5 +1,5 @@
 ---
-description: Start the selected Agent Task ticket, or pick the next task when no ticket is specified.
+description: Start the selected AgentTask ticket, or pick the next task when no ticket is specified.
 argument-hint: "[task code, title, or description]"
 allowed-tools: Read, Grep, Glob, mcp__plugin_agent-task_agent-task__fetch, mcp__plugin_agent-task_agent-task__search, mcp__plugin_agent-task_agent-task__list_spaces, mcp__plugin_agent-task_agent-task__list_projects, mcp__plugin_agent-task_agent-task__list_task_groups, mcp__plugin_agent-task_agent-task__list_labels, mcp__plugin_agent-task_agent-task__list_space_members, mcp__plugin_agent-task_agent-task__list_subtasks, mcp__plugin_agent-task_agent-task__start_work, mcp__plugin_agent-task_agent-task__create_task, mcp__plugin_agent-task_agent-task__create_subtask, mcp__plugin_agent-task_agent-task__update_task, mcp__plugin_agent-task_agent-task__update_subtask, mcp__plugin_agent-task_agent-task__add_comment
 ---
