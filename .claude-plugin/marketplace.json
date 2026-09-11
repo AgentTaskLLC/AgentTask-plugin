@@ -2,7 +2,7 @@
   "name": "agent-task",
   "description": "AgentTask plugin marketplace. Canonical source: AgentTaskLLC/AgentTask-plugin.",
   "owner": {
-    "name": "Agent Task LLC",
+    "name": "AgentTask LLC",
     "url": "https://www.agent-task.com"
   },
   "plugins": [

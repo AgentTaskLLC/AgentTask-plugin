@@ -75,4 +75,4 @@ shellcheck plugins/agent-task/git-hooks/* plugins/agent-task/scripts/*.sh plugin
 
 ## License
 
-Proprietary. See [LICENSE](LICENSE). Copyright (c) 2025 Agent Task LLC.
+Proprietary. See [LICENSE](LICENSE). Copyright (c) 2025 AgentTask LLC.
