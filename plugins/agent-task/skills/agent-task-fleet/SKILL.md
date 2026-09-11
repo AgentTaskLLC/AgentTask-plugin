@@ -1,6 +1,6 @@
 ---
 name: agent-task-fleet
-description: Inspect and operate Agent Task fleet runs where fleet tools are available. Use for remote task execution, run status, cancellation, or fleet scheduling.
+description: Inspect and operate AgentTask fleet runs where fleet tools are available. Use for remote task execution, run status, cancellation, or fleet scheduling.
 ---
 
 # Fleet runs

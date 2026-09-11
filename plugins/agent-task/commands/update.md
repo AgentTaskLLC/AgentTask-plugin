@@ -6,7 +6,7 @@ allowed-tools: Read, Grep, Glob, mcp__plugin_agent-task_agent-task__list_spaces,
 
 # /update — make the board reflect the work
 
-Mid-session sync. Walk the work that's actually happening and make Agent Task match it: capture
+Mid-session sync. Walk the work that's actually happening and make AgentTask match it: capture
 anything untracked, fill in the gaps, and post a status update. Be autonomous; confirm only the
 side-effectful, non-obvious changes. Read the `agent-task-workflow` skill first.
 

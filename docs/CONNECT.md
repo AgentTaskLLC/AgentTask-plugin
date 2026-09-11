@@ -1,4 +1,4 @@
-# Connect Agent Task
+# Connect AgentTask
 
 The production MCP endpoint is `https://app.agent-task.com/v1/public/mcp`, using
 Streamable HTTP. The bundled configuration contains this literal URL and no

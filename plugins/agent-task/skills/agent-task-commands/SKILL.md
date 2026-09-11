@@ -1,6 +1,6 @@
 ---
 name: agent-task-commands
-description: Run Agent Task start, plan, update, triage, organize, note, init, finish, or crew workflows from natural-language requests in any harness.
+description: Run AgentTask start, plan, update, triage, organize, note, init, finish, or crew workflows from natural-language requests in any harness.
 ---
 
 # Workflow entry points

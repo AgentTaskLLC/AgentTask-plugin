@@ -6,7 +6,7 @@ allowed-tools: Read, Grep, Glob, mcp__plugin_agent-task_agent-task__list_spaces,
 
 # /init — initialize a new project
 
-Create a well-formed project in Agent Task by asking a short series of clarifying questions. **Every
+Create a well-formed project in AgentTask by asking a short series of clarifying questions. **Every
 question is skippable** — if the user skips, use a sensible default and say what you assumed. Read
 the `agent-task-workflow` skill first.
 
@@ -44,10 +44,10 @@ Ask these one at a time or as a short batch; accept "skip" for any:
 When scaffolding, add this section to the selected instruction file:
 
 ```markdown
-## Agent Task — keep tickets updated
+## AgentTask — keep tickets updated
 
-When you work on an Agent Task ticket (e.g. an `AI-…` code) in this repo, keep the ticket a live
-record via the Agent Task MCP tools (`add_comment`, `update_task`):
+When you work on an AgentTask ticket (e.g. an `AI-…` code) in this repo, keep the ticket a live
+record via the AgentTask MCP tools (`add_comment`, `update_task`):
 
 - As you make progress, post short `add_comment` updates at meaningful checkpoints (a sub-goal done,
   a blocker hit/cleared, a decision made) — 1–3 lines: what changed, what's next.

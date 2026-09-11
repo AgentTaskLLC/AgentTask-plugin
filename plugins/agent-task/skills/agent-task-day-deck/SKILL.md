@@ -1,6 +1,6 @@
 ---
 name: agent-task-day-deck
-description: Read or update an Agent Task DayDeck focus list and inspect DayLog activity. Use for today's focus, focus-list changes, or personal activity history.
+description: Read or update an AgentTask DayDeck focus list and inspect DayLog activity. Use for today's focus, focus-list changes, or personal activity history.
 ---
 
 # Daily focus

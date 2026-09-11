@@ -115,7 +115,7 @@ class ShellTests(unittest.TestCase):
         link.symlink_to(self.repo, target_is_directory=True)
         self.install("install", cwd=link)
         self.assertTrue(self.hook.is_file())
-        self.assertIn("installed by Agent Task", self.install("status", cwd=link).stdout)
+        self.assertIn("installed by AgentTask", self.install("status", cwd=link).stdout)
         self.install("uninstall", cwd=link)
         self.assertFalse(self.hook.exists())
 
@@ -133,7 +133,7 @@ class ShellTests(unittest.TestCase):
                   "# MARKER: agent-task-crew-hook  "
                   "(do not remove; /crews hook uninstall keys off it)\n")
         self.hook.write_text(legacy, encoding="utf-8")
-        self.assertIn("installed by Agent Task", self.install("status").stdout)
+        self.assertIn("installed by AgentTask", self.install("status").stdout)
         self.install("install")
         self.assertNotEqual(self.hook.read_text(encoding="utf-8"), legacy)
         self.assertEqual(list(self.hook.parent.glob("pre-push.backup.*")), [])

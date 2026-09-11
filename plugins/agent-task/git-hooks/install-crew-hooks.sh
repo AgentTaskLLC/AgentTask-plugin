@@ -61,7 +61,7 @@ cmd_install() {
   chmod 755 "$temporary"
   mv -f -- "$temporary" "$target"
   temporary=""
-  printf 'installed Agent Task pre-push hook (blocking: %s): %s\n' "$blocking" "$target"
+  printf 'installed AgentTask pre-push hook (blocking: %s): %s\n' "$blocking" "$target"
 }
 
 cmd_uninstall() {
@@ -71,7 +71,7 @@ cmd_uninstall() {
   if [ ! -e "$target" ]; then printf 'pre-push: not installed\n'; return; fi
   is_ours "$target" || die "pre-push is managed by another tool; leaving it untouched"
   rm -- "$target"
-  printf 'removed Agent Task pre-push hook; backups are preserved\n'
+  printf 'removed AgentTask pre-push hook; backups are preserved\n'
 }
 
 cmd_status() {
@@ -81,7 +81,7 @@ cmd_status() {
   if [ ! -e "$target" ]; then
     printf 'pre-push: not installed\n'
   elif is_ours "$target"; then
-    printf 'pre-push: installed by Agent Task\n'
+    printf 'pre-push: installed by AgentTask\n'
   else
     printf 'pre-push: managed by another tool\n'
   fi

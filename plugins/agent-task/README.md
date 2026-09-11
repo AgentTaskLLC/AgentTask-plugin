@@ -1,4 +1,4 @@
-# Agent Task plugin
+# AgentTask plugin
 
 One shared workflow library, packaged for Claude Code and Codex. Other MCP clients
 can use the same procedures through explicit skill/reference loading.
@@ -33,7 +33,7 @@ may work when unambiguous. Codex and other skill-capable harnesses use the
 | `finish` | Verify completion, report the result, and close when authorized. |
 | `crews` | Sync references, engage an approved roster, inspect mentions, or manage hooks. |
 
-Each command's `allowed-tools` names the Agent Task MCP tools that command actually
+Each command's `allowed-tools` names the AgentTask MCP tools that command actually
 uses, so a write command does preapprove its own writes — `/start` can claim a task,
 `/note` can create a note. No command preapproves shell, file writes, or another
 server's tools, and `report` and `standup` are restricted to read-only tools.

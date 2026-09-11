@@ -1,6 +1,6 @@
 ---
 name: agent-task-artifacts
-description: Discover and publish Agent Task artifacts where supported. Use for deliverable discovery or explicitly requested artifact publication and updates.
+description: Discover and publish AgentTask artifacts where supported. Use for deliverable discovery or explicitly requested artifact publication and updates.
 ---
 
 # Artifacts

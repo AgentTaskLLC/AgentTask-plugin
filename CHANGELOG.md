@@ -13,7 +13,7 @@
 
 ### Fixed
 
-- Commands name the Agent Task MCP tools they call. Previously every command preapproved only
+- Commands name the AgentTask MCP tools they call. Previously every command preapproved only
   `Read, Grep, Glob`, which left no command able to reach the MCP server it drives.
 - `report` and `standup` allow `Task`, so the documented delegation to the bundled reporter can
   actually be authorized; both remain denied every mutating tool.
